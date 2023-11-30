@@ -21,7 +21,7 @@ function Header() {
               DASHBOARD
             </Button>
           </NavLink>
-          <NavLink to='#'>
+          <NavLink to='/create-ads'>
             <Button variant='outlined' size='small'>
               CREATE ADS
             </Button>
