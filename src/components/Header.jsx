@@ -1,5 +1,6 @@
 import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
+import { NavLink } from 'react-router-dom';
 
 function Header() {
   return (
@@ -15,12 +16,16 @@ function Header() {
       >
         <Button size='small'>APP LOGO</Button>
         <div>
-          <Button variant='outlined' size='small'>
-            DASHBOARD
-          </Button>
-          <Button variant='outlined' size='small'>
-            CREATE ADS
-          </Button>
+          <NavLink to='/dashboard'>
+            <Button variant='outlined' size='small'>
+              DASHBOARD
+            </Button>
+          </NavLink>
+          <NavLink to='#'>
+            <Button variant='outlined' size='small'>
+              CREATE ADS
+            </Button>
+          </NavLink>
         </div>
       </Toolbar>
     </>
