@@ -14,17 +14,15 @@ function Header() {
           alignItems: 'center',
         }}
       >
-        <Button size='small'>APP LOGO</Button>
+        <NavLink to='/'>
+          <Button>APP LOGO</Button>
+        </NavLink>
         <div>
           <NavLink to='/dashboard'>
-            <Button variant='outlined' size='small'>
-              DASHBOARD
-            </Button>
+            <Button>DASHBOARD</Button>
           </NavLink>
           <NavLink to='/create-ads'>
-            <Button variant='outlined' size='small'>
-              CREATE ADS
-            </Button>
+            <Button>CREATE ADS</Button>
           </NavLink>
         </div>
       </Toolbar>

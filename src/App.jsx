@@ -9,21 +9,40 @@ function App() {
   const router = createBrowserRouter([
     {
       path: '/',
-      element: <RootLayout />,
-      children: [
-        {
-          path: '/dashboard',
-          element: <Dashboard />,
-        },
-        {
-          path: '/create-ads',
-          element: <CreateAds />,
-        },
-        {
-          path: '/create-ads/fill-data',
-          element: <FillData />,
-        },
-      ],
+      element: (
+        <>
+          <RootLayout />
+          <Dashboard />
+        </>
+      ),
+    },
+
+    {
+      path: '/dashboard',
+      element: (
+        <>
+          <RootLayout />
+          <Dashboard />
+        </>
+      ),
+    },
+    {
+      path: '/create-ads',
+      element: (
+        <>
+          <RootLayout />
+          <CreateAds />
+        </>
+      ),
+    },
+    {
+      path: '/create-ads/fill-data',
+      element: (
+        <>
+          <RootLayout />
+          <FillData />
+        </>
+      ),
     },
   ]);
 
