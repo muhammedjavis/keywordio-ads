@@ -5,20 +5,15 @@ import {
   TableHead,
   TableRow,
   TableCell,
-  TableBody,
   Paper,
-  Typography,
-  FormControl,
-  Select,
-  MenuItem,
-  IconButton,
   FormControlLabel,
 } from '@mui/material';
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
-import { PieChart } from '@mui/x-charts/PieChart';
+
 import { red, blue, green, yellow } from '@mui/material/colors';
 import Switch from '@mui/material/Switch';
+import DashboardTable from './Dashboard/DashboardTable';
+import Dropdown from './Dashboard/Dropdown';
+import DoughnutChartSection from './Dashboard/DoughnutChartSection';
 
 export default function Dashboard() {
   const MATRICES = [
@@ -57,7 +52,7 @@ export default function Dashboard() {
     Facewash: green[500],
     Shampoos: yellow[500],
   };
-  const [showDoughnutChart, setShowDoughnutChart] = useState(false);
+  const [showDoughnutChart, setShowDoughnutChart] = useState(true);
   const [selectedMetric, setSelectedMetric] = useState('Clicks');
 
   const handleMetricSelect = (event) => {
@@ -89,86 +84,11 @@ export default function Dashboard() {
   return (
     <div style={{ display: 'flex', flex: '1' }}>
       <div style={{ flex: 1, marginRight: '20px' }}>
-        <TableContainer component={Paper}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell colSpan={5}>
-                  <Typography variant='h5' style={{ fontWeight: 'bold' }}>
-                    Ads Insights
-                  </Typography>
-                </TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell align='center'>
-                  <Typography variant='p' style={{ fontWeight: 'bold' }}>
-                    Campaigns
-                  </Typography>
-                </TableCell>
-                <TableCell align='center'>
-                  <Typography variant='p' style={{ fontWeight: 'bold' }}>
-                    Clicks
-                  </Typography>
-                  <IconButton onClick={() => handleSorting('Clicks')}>
-                    {sorting.column === 'Clicks' && sorting.order === 'asc' ? (
-                      <ArrowUpwardIcon />
-                    ) : (
-                      <ArrowDownwardIcon />
-                    )}
-                  </IconButton>
-                </TableCell>
-                <TableCell align='center'>
-                  <Typography variant='p' style={{ fontWeight: 'bold' }}>
-                    Cost
-                  </Typography>
-                  <IconButton onClick={() => handleSorting('Cost')}>
-                    {sorting.column === 'Cost' && sorting.order === 'asc' ? (
-                      <ArrowUpwardIcon />
-                    ) : (
-                      <ArrowDownwardIcon />
-                    )}
-                  </IconButton>
-                </TableCell>
-                <TableCell align='center'>
-                  <Typography variant='p' style={{ fontWeight: 'bold' }}>
-                    Conversions
-                  </Typography>
-                  <IconButton onClick={() => handleSorting('Conversions')}>
-                    {sorting.column === 'Conversions' &&
-                    sorting.order === 'asc' ? (
-                      <ArrowUpwardIcon />
-                    ) : (
-                      <ArrowDownwardIcon />
-                    )}
-                  </IconButton>
-                </TableCell>
-                <TableCell align='center'>
-                  <Typography variant='p' style={{ fontWeight: 'bold' }}>
-                    Revenue
-                  </Typography>
-                  <IconButton onClick={() => handleSorting('Revenue')}>
-                    {sorting.column === 'Revenue' && sorting.order === 'asc' ? (
-                      <ArrowUpwardIcon />
-                    ) : (
-                      <ArrowDownwardIcon />
-                    )}
-                  </IconButton>
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {sortedData.map((row, index) => (
-                <TableRow key={index}>
-                  <TableCell align='center'>{row.Campaign}</TableCell>
-                  <TableCell align='center'>{row.Clicks}</TableCell>
-                  <TableCell align='center'>${row.Cost}</TableCell>
-                  <TableCell align='center'>{row.Conversions}</TableCell>
-                  <TableCell align='center'>${row.Revenue}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+        <DashboardTable
+          sortedData={sortedData}
+          handleSorting={handleSorting}
+          sorting={sorting}
+        />
       </div>
       <div style={{ flex: '1' }}>
         <TableContainer component={Paper}>
@@ -176,93 +96,24 @@ export default function Dashboard() {
             <TableHead>
               <TableRow>
                 <TableCell colSpan={5}>
-                  <div
-                    style={{
-                      display: 'flex',
-                      flex: '1',
-                      justifyContent: 'space-between',
-                    }}
-                  >
-                    <Typography variant='h5' style={{ fontWeight: 'bold' }}>
-                      Ads Insights
-                    </Typography>
-                    {showDoughnutChart && (
-                      <div>
-                        {/* Render the DoughnutChart */}
-                        <FormControl>
-                          <Select
-                            value={selectedMetric}
-                            onChange={handleMetricSelect}
-                          >
-                            <MenuItem value={'Clicks'}>Clicks</MenuItem>
-                            <MenuItem value={'Cost'}>Cost</MenuItem>
-                            <MenuItem value={'Conversions'}>
-                              Conversions
-                            </MenuItem>
-                            <MenuItem value={'Revenue'}>Revenue</MenuItem>
-                          </Select>
-                        </FormControl>
-                      </div>
-                    )}
-                  </div>
+                  <Dropdown
+                    showDoughnutChart={showDoughnutChart}
+                    selectedMetric={selectedMetric}
+                    handleMetricSelect={handleMetricSelect}
+                  />
                 </TableCell>
               </TableRow>
             </TableHead>
           </Table>
         </TableContainer>
-        <Paper style={{ padding: '20px', display: 'flex' }}>
-          <div style={{ display: 'flex', flex: '1' }}>
-            {showDoughnutChart && (
-              <div style={{ flex: 1, marginLeft: '20px' }}>
-                <div style={{ position: 'relative', height: '300px' }}>
-                  <PieChart
-                    series={[
-                      {
-                        data: sortedData.map((row) => ({
-                          argument: row.Clicks,
-                          value: row[selectedMetric],
-                          color: campaignColors[row.Campaign],
-                        })),
-                        innerRadius: 30,
-                        outerRadius: 100,
-                        paddingAngle: 5,
-                        cornerRadius: 5,
-                        startAngle: -90,
-                        endAngle: 180,
-                        cx: 150,
-                        cy: 150,
-                      },
-                    ]}
-                  />
-                </div>
-              </div>
-            )}
-            <div style={{ flex: '1', alignItems: 'center', margin: 'auto' }}>
-              {showDoughnutChart &&
-                sortedData.map((row, index) => (
-                  <div
-                    key={index}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      marginBottom: '5px',
-                    }}
-                  >
-                    <div
-                      style={{
-                        width: '12px',
-                        height: '12px',
-                        backgroundColor: campaignColors[row.Campaign],
-                      }}
-                    ></div>
-                    <Typography variant='body2' style={{ marginLeft: '5px' }}>
-                      {row.Campaign}
-                    </Typography>
-                  </div>
-                ))}
-            </div>
-          </div>
-        </Paper>
+
+        <DoughnutChartSection
+          showDoughnutChart={showDoughnutChart}
+          sortedData={sortedData}
+          campaignColors={campaignColors}
+          selectedMetric={selectedMetric}
+        />
+
         <div style={{ marginLeft: '20px' }}>
           <FormControlLabel
             control={
