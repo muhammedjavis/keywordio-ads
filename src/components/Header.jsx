@@ -15,7 +15,15 @@ function Header() {
         }}
       >
         <NavLink to='/'>
-          <Button>APP LOGO</Button>
+          <Button
+            style={{
+              fontFamily: 'sans-serif',
+              fontWeight: 'bolder',
+              fontSize: '20px',
+            }}
+          >
+            APP LOGO
+          </Button>
         </NavLink>
         <div>
           <NavLink to='/dashboard'>
