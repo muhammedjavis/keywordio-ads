@@ -3,6 +3,7 @@ import RootLayout from './components/RootLayout';
 import Dashboard from './components/Dashboard';
 import CreateAds from './components/CreateAds';
 import { AdTypeProvider } from '../store/AdTypeContext';
+import FillData from './components/FillData';
 
 function App() {
   const router = createBrowserRouter([
@@ -17,6 +18,10 @@ function App() {
         {
           path: '/create-ads',
           element: <CreateAds />,
+        },
+        {
+          path: '/create-ads/fill-data',
+          element: <FillData />,
         },
       ],
     },
