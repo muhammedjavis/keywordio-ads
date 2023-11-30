@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext } from 'react';
 import {
   Checkbox,
   Box,
@@ -7,14 +7,15 @@ import {
   Paper,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { AdTypeContext } from '../../store/AdTypeContext';
 
 const CreateAds = () => {
-  const [selectedAdType, setSelectedAdType] = useState('');
+  const { selectedAdType, setSelectedAdType } = useContext(AdTypeContext);
   const navigate = useNavigate();
 
   const handleAdTypeSelect = (adType) => {
     setSelectedAdType(adType);
-    navigate(`${adType}-ad`);
+    navigate('fill-data');
   };
 
   return (
